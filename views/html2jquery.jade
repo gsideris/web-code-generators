@@ -1,0 +1,37 @@
+extend layout
+block content
+    .container-fluid
+      .row
+        .col-md-12
+          h3
+            | html2jquery Converter
+          .row
+            .col-md-6
+              h4  HTML Code
+              textarea#preText(name='preText')
+            .col-md-6
+              h4  jquery Code
+              textarea#postText(name='postText')
+          button#convert.btn.btn-primary(name='convert', type='button')
+            | Convert
+
+    script.
+        $( "#convert" ).click(function(evt) {
+        evt.preventDefault();
+        $.ajax({
+        url: '/html2jquery.do',
+        dataType: 'json',
+        type: 'post',
+        contentType: 'application/json',
+        data: JSON.stringify( { "preText": pre.getValue()}),
+        processData: false,
+        success: function( data, textStatus, jQxhr ){
+        pst.getDoc().setValue(data.result);
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+        console.log( errorThrown );
+        }
+        });
+        })
+
+

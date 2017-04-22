@@ -1,0 +1,64 @@
+extend layout
+block content
+    .container-fluid
+      .row
+        .col-md-12
+          h3
+            | dialog2coffee Converter
+          .row
+            .col-md-6
+              h4  Data
+                    #divCheckbox(style='visibility: hidden; display:inline;')
+                          textarea#preText(name='preText')
+                
+                    form#preform.form-horizontal(name='preform')
+                      fieldset
+                        // Text input
+                        .form-group
+                          label.col-md-4.control-label(for='name') Name/ID
+                          .col-md-4
+                            input#name.form-control.input-md(name='name', type='text', placeholder='')
+                        // Text input
+                        .form-group
+                          label.col-md-4.control-label(for='title') Title
+                          .col-md-4
+                            input#title.form-control.input-md(name='title', type='text', placeholder='')
+                        // Text input
+                        .form-group
+                          label.col-md-4.control-label(for='ok') OK Button text
+                          .col-md-4
+                            input#ok.form-control.input-md(name='ok', type='text', placeholder='')
+
+
+
+
+
+
+            .col-md-6
+              h4  coffee Code
+              textarea#postText(name='postText')
+          button#convert.btn.btn-primary(name='convert', type='button')
+            | Convert
+
+    script.
+        $( "#convert" ).click(function(evt) {
+        evt.preventDefault();
+        var formdata = {};
+        $("#preform").serializeArray().map(function(x){formdata[x.name] = x.value;}); 
+        $.ajax({
+        url: '/dialog2coffee.do',
+        dataType: 'json',
+        type: 'post',
+        contentType: 'application/json',
+        data:  JSON.stringify( formdata ),
+        processData: false,
+        success: function( data, textStatus, jQxhr ){
+        pst.getDoc().setValue(data.result);
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+        console.log( errorThrown );
+        }
+        });
+        })
+
+

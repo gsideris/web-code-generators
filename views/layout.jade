@@ -1,0 +1,30 @@
+doctype
+html
+  head
+    title #{title} - web-code-generators 
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/cm/lib/codemirror.css')
+    link(rel='stylesheet', href='/cm/doc/docs.css')
+    script(src='/js/jquery.min.js')
+    script(src='/cm/lib/codemirror.js')
+    script(src='/cm/mode/xml/xml.js')
+    script(src='/cm/mode/javascript/javascript.js')
+    script(src='/cm/mode/css/css.js')
+    script(src='/cm/mode/htmlmixed/htmlmixed.js')
+    script(src='/cm/addon/edit/matchbrackets.js')
+    script(src='/cm/doc/activebookmark.js')
+    style.
+      .CodeMirror { height: auto; border: 1px solid #ddd; }
+      .CodeMirror-scroll { max-height: 200px; }
+      .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+
+
+  body
+    header
+      h1 web-code-generators
+    .container
+      block content
+
+  script.
+    var pre = CodeMirror.fromTextArea(preText,{lineNumbers: true});
+    var pst = CodeMirror.fromTextArea(postText,{lineNumbers: true});

@@ -1,0 +1,37 @@
+extend layout
+block content
+    .container-fluid
+      .row
+        .col-md-12
+          h3
+            | js2coffee Converter
+          .row
+            .col-md-6
+              h4  Javascript Code
+              textarea#preText(name='preText')
+            .col-md-6
+              h4  coffee Code
+              textarea#postText(name='postText')
+          button#convert.btn.btn-primary(name='convert', type='button')
+            | Convert
+
+    script.
+        $( "#convert" ).click(function(evt) {
+        evt.preventDefault();
+        $.ajax({
+        url: '/js2coffee.do',
+        dataType: 'json',
+        type: 'post',
+        contentType: 'application/json',
+        data: JSON.stringify( { "preText": pre.getValue()}),
+        processData: false,
+        success: function( data, textStatus, jQxhr ){
+        pst.getDoc().setValue(data.result);
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+        console.log( errorThrown );
+        }
+        });
+        })
+
+
