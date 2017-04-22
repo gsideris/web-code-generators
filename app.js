@@ -21,6 +21,7 @@ function compile(str, path) {
     .set('filename', path)
     .use(nib())
 }
+app.set('port', (process.env.PORT || 5000));
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
 app.use(express.logger('dev'))
@@ -136,4 +137,6 @@ app.post('/brand2less.do',
 
 
 
-app.listen(80)
+app.listen(app.get('port'), function() {
+  console.log('Running on port', app.get('port'));
+});
