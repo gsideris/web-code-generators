@@ -8,6 +8,8 @@
     "stylus": "*",
     "html2jquery":"*",
     "js2coffee":"*",
+    "html2jade": "*",
+    "jade": "*",
     "nib": "*"
   }
 }

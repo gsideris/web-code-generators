@@ -1,5 +1,6 @@
 ﻿var html2jquery = require('html2jquery');
 var js2coffee = require('js2coffee');
+var html2jade = require('html2jade');
 
 
 /*
@@ -82,7 +83,12 @@ app.get('/brand2less',
     })
 
 
-
+app.get('/html2jade', 
+    function (req, res) {
+        res.render('html2jade',
+              { title : 'html2jade' }
+        )
+    })
 
 app.post('/html2jquery.do',
     function (req,res) { 
