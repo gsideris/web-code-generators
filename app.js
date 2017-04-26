@@ -1,6 +1,7 @@
 ﻿var html2jquery = require('html2jquery');
 var js2coffee = require('js2coffee');
 var html2jade = require('html2jade');
+var fs = require('fs');
 
 
 /*
@@ -90,6 +91,14 @@ app.get('/html2jade',
         )
     })
 
+app.get('/jquerygen', 
+    function (req, res) {
+        res.render('jquerygen',
+              { title : 'jquerygen' }
+        )
+    })
+
+
 app.post('/html2jquery.do',
     function (req,res) { 
         var name = req.body.preText
@@ -105,6 +114,17 @@ app.post('/js2coffee.do',
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({ result : coffee}));
     })
+
+app.post('/jquerygen.do',
+    function (req,res) { 
+        var name = req.body.name
+
+        var template = fs.readFileSync("./templates/jquerygen.coffee", "utf8");
+        template =  template.replace(/__name__/g, name);
+
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify({ result : template }));
+    })
     
 app.post('/dialog2coffee.do',
     function (req,res) { 
@@ -113,10 +133,10 @@ app.post('/dialog2coffee.do',
         var ok = req.body.ok
 
         var template = "<div class='modal fade' id='modal-container-" + name + "' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>  <div class='modal-dialog'><div class='modal-content'> <div class='modal-header'> <button type='button' class='close' data-dismiss='modal' aria-hidden='true'> × </button><h4 class='modal-title' id='myModalLabel'>" + title + "</h4></div> <div class='modal-body-" + name + "'></div><div class='modal-footer'><button type='button' class='btn btn-default' data-dismiss='modal'>Close</button><button type='button' class='btn btn-primary'>" + ok + "</button></div></div></div></div>";
-        coffee = js2coffee.build( html2jquery(template)[0]);
 
+        var jqCode = html2jquery(template);
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({ result : coffee}));
+        res.send(JSON.stringify({ result : jqCode[0] }));
     })
     
 
